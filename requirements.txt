@@ -1,0 +1,23 @@
+#langchain things
+langchain
+langchain-community
+
+#state forming
+langgraph
+
+#llm 
+ollama
+
+#web-scrapping
+playwright
+
+#database
+psycopg2-binary
+redis
+
+#ui
+streamlit
+
+#python-dotenv
+python-dotenv
+
