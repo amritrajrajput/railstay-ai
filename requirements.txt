@@ -6,7 +6,7 @@ langchain-community
 langgraph
 
 #llm 
-ollama
+langchain-google-genai
 
 #web-scrapping
 playwright

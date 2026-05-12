@@ -1,17 +1,17 @@
 import logging
-from models.ollama_llm import Localllm
+from models.gemini_llm import GeminiLLM
 import json
 
 logger = logging.getLogger(__name__)
 
 class ResultRanker:
     def __init__(self):
-        # We initialize our Llama 3 model we built earlier
-        self.llm = Localllm().get_llm()
+        # We initialize our Gemini model we built earlier
+        self.llm = GeminiLLM().get_llm()
 
     def rank_results(self, search_results, original_preferences):
         """
-        Uses Llama 3 to analyze and rank the search results based on price, availability, 
+        Uses Gemini to analyze and rank the search results based on price, availability, 
         and user preferences.
         """
         # First, we filter out any errors or waitlisted rooms. We only want Available rooms!
@@ -37,11 +37,12 @@ class ResultRanker:
         Do not include any other conversational text.
         """
         
-        logger.info("Invoking Llama 3 for intelligent ranking...")
+        logger.info("Invoking Gemini API for intelligent ranking...")
         try:
             # We ask the LLM to do the heavy lifting of reading the JSON and reasoning about the best options
             ranked_output = self.llm.invoke(prompt)
-            return ranked_output
+            # Gemini returns an AIMessage, so we need to extract the content
+            return ranked_output.content
         except Exception as e:
             logger.error(f"Error connecting to LLM: {e}")
             return f"Error connecting to LLM: {e}"
