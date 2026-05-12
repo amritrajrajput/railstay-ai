@@ -1,60 +1,118 @@
-# RailStay AI – IRCTC Retiring Room Search Agent
+<div align="center">
+  <h1>🚆 RailStay AI</h1>
+  <p><strong>Intelligent IRCTC Retiring Room Search & Ranking Agent</strong></p>
 
-This project builds an AI agent that automatically searches IRCTC retiring room availability across multiple nearby stations and room combinations using LangGraph, Playwright, Streamlit, and Google's Gemini API.
+  <!-- Badges -->
+  <a href="https://python.org">
+    <img src="https://img.shields.io/badge/Python-3.9+-blue.svg" alt="Python Version">
+  </a>
+  <a href="https://streamlit.io">
+    <img src="https://img.shields.io/badge/UI-Streamlit-FF4B4B.svg" alt="Streamlit">
+  </a>
+  <a href="https://langchain.com">
+    <img src="https://img.shields.io/badge/Framework-LangGraph-1C3C3C.svg" alt="LangGraph">
+  </a>
+  <a href="https://playwright.dev">
+    <img src="https://img.shields.io/badge/Automation-Playwright-2EAD33.svg" alt="Playwright">
+  </a>
+  <a href="https://ai.google.dev">
+    <img src="https://img.shields.io/badge/LLM-Gemini_API-8E75B2.svg" alt="Gemini API">
+  </a>
+</div>
 
-## Architecture
+<br />
 
-1. **User Input** starts at the **Streamlit UI** (`app.py`).
-2. Input is passed to the **LangGraph Agent** (`agent/graph.py`).
-3. **Planner Node**: Determines all nearby stations for a city (via Postgres/mock DB `database/stations.py`).
-4. **Search Node**: Executes headless browser automation (`tools/irctc_search.py`) via Playwright in parallel.
-5. **Ranking Node**: Uses Gemini API (`models/gemini_llm.py`) to analyze the results and rank them.
-6. **Output**: The best combinations are sent back to the Streamlit UI.
+RailStay AI is an autonomous, agentic system designed to take the friction out of booking IRCTC retiring rooms. Instead of manually checking hundreds of nearby stations and room combinations, this agent automatically maps out logical stations, executes headless browser searches in parallel, and leverages **Google's Gemini API** to analyze and rank the absolute best options for your stay.
 
-## Getting Started
+## ✨ Features
 
-### 1. Requirements
+- **🧠 Agentic Planning**: Intelligently determines all logical nearby railway stations based on your target city.
+- **⚡ Automated Web Scraping**: Headless browsing via Playwright automatically simulates searches across multiple stations and dates.
+- **🏆 AI-Powered Ranking**: Utilizes Google's Gemini API to evaluate hundreds of search results and rank them based on your exact budget, duration, and room type preferences.
+- **🎨 Interactive UI**: A clean, modern Streamlit interface for effortless interaction.
 
-- Python 3.9+
-- A valid Google Gemini API Key
+## 🏗️ Architecture
+
+The system operates on a directed graph workflow powered by **LangGraph**:
+
+1. **User Input (`app.py`)**: The user provides trip details (City, Date, Duration, Room Type, Budget) via the Streamlit frontend.
+2. **Planner Node (`agent/planner.py`)**: Queries the station database to build an exhaustive list of combinations to search.
+3. **Search Node (`tools/irctc_search.py`)**: Deploys Playwright to autonomously scrape availability across all planned combinations.
+4. **Ranking Node (`agent/ranking.py`)**: Passes raw scraped data to the **Gemini API** for contextual analysis and optimal ranking.
+5. **Final Output**: The curated top 3 options are streamed back to the user interface.
+
+## 🛠️ Tech Stack
+
+- **Core/Agent**: Python, LangGraph, LangChain
+- **LLM Engine**: Google Gemini API (`langchain-google-genai`)
+- **Automation**: Playwright
+- **Frontend**: Streamlit
+- **Data**: PostgreSQL / Local mock database
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+
+Before installing, ensure you have the following:
+- **Python 3.9** or higher installed.
+- A valid **[Google Gemini API Key](https://aistudio.google.com/app/apikey)**.
 
 ### 2. Installation
 
+Clone the repository and set up your virtual environment:
+
 ```bash
-# Set up a virtual environment
+# Clone the repository
+git clone https://github.com/amritrajrajput/railstay-ai.git
+cd railstay-ai
+
+# Create a virtual environment
 python -m venv .venv
 
-# Activate it
-# Windows: .\.venv\Scripts\activate
-# Mac/Linux: source .venv/bin/activate
+# Activate the virtual environment
+# On Windows:
+.\.venv\Scripts\activate
+# On Mac/Linux:
+source .venv/bin/activate
 
-# Install requirements
+# Install the required dependencies
 pip install -r requirements.txt
 
-# Install Playwright browsers
+# Install Playwright browser binaries
 playwright install
 ```
 
 ### 3. Configuration
 
-Copy the example environment file and update it with your settings:
+Configure your environment variables by copying the example file:
+
 ```bash
-# Windows
+# On Windows:
 copy .env.example .env
-# Linux/Mac
+# On Mac/Linux:
 cp .env.example .env
 ```
-Edit `.env` to configure your database connection and LLM model.
 
-### 4. Setup Gemini API Key
+Open the newly created `.env` file and **add your Gemini API Key**:
+```env
+GEMINI_API_KEY=your_actual_api_key_here
+GEMINI_MODEL_NAME=gemini-1.5-pro
+```
 
-Make sure you have created your Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
-Add the API key to your `.env` file as `GEMINI_API_KEY`.
+### 4. Running the Application
 
-### 5. Run the Application
+Once your environment is configured, start the Streamlit server:
 
 ```bash
 streamlit run app.py
 ```
 
-This will launch the Web UI on `http://localhost:8501`.
+The web interface will automatically launch in your default browser at `http://localhost:8501`. Enter your travel details and let the AI find your perfect retiring room!
+
+---
+
+<div align="center">
+  <i>Built with ❤️ for a smarter travel experience.</i>
+</div>
