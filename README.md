@@ -112,6 +112,10 @@ streamlit run app.py
 The web interface will automatically launch in your default browser at `http://localhost:8501`. Enter your travel details and let the AI find your perfect retiring room!
 
 ---
+## 📸 Screencast / Demo
+<img width="1827" height="861" alt="ChatGPT Image May 14, 2026, 08_44_18 PM" src="https://github.com/user-attachments/assets/baf70a9e-0307-4cdf-bb8b-d556275293b6" />
+---
+
 
 <div align="center">
   <i>Built with ❤️ for a smarter travel experience.</i>
